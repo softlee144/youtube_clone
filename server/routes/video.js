@@ -59,6 +59,16 @@ router.post("/uploadVideo", (req, res) => {
   });
 });
 
+router.get("/getVideos", (req, res) => {
+  // 비디오를 DB에서 가져와서 클라이언트에 보낸다.
+  Video.find()
+    .populate("writer") // populate를 해야 모든 정보를 가져온다.  그렇지 않을 경우, 단순히 writer id만 가져옴.
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+});
+
 router.post("/thumbnail", (req, res) => {
   // 썸네일 생성하고 비디오 러닝타임도 가져오기
   let thumbsFilePath = "";
