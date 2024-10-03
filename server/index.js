@@ -39,6 +39,7 @@ app.use(cookieParser());
 // 아래 코드를 통해 users, video로 분기
 app.use("/api/users", require("./routes/users"));
 app.use("/api/video", require("./routes/video"));
+app.use("/api/subscribe", require("./routes/subscribe"));
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client

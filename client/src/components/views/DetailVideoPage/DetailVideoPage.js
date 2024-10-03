@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { List, Avatar, Row, Col } from "antd";
 import axios from "axios";
+import SideVideo from "./Sections/SideVideo";
+import Subscriber from "./Sections/Subscriber";
 
 function DetailVideoPage(props) {
   const videoId = props.match.params.videoId;
@@ -45,18 +47,24 @@ function DetailVideoPage(props) {
               controls
             ></video>
 
-            {/* <List.Item
+            <List.Item
               actions={[
-                <LikeDislikes
-                  video
-                  videoId={videoId}
-                  userId={localStorage.getItem("userId")}
-                />,
                 <Subscriber
                   userTo={Video.writer._id}
                   userFrom={localStorage.getItem("userId")}
                 />,
               ]}
+              // actions={[
+              //   <LikeDislikes
+              //     video
+              //     videoId={videoId}
+              //     userId={localStorage.getItem("userId")}
+              //   />,
+              //   <Subscriber
+              //     userTo={Video.writer._id}
+              //     userFrom={localStorage.getItem("userId")}
+              //   />,
+              // ]}
             >
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
@@ -64,13 +72,13 @@ function DetailVideoPage(props) {
                 description={Video.description}
               />
               <div></div>
-            </List.Item> */}
+            </List.Item>
 
             {/* <Comments CommentLists={CommentLists} postId={Video._id} refreshFunction={updateComment} /> */}
           </div>
         </Col>
         <Col lg={6} xs={24}>
-          {/* <SideVideo /> */}
+          <SideVideo />
         </Col>
       </Row>
     );
