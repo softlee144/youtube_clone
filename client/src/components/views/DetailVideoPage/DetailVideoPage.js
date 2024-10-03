@@ -34,6 +34,14 @@ function DetailVideoPage(props) {
   }, []);
 
   if (Video.writer) {
+    // 비디오 업로더와 로그인 한 사람이 같을 경우 구독 버튼 표시하지 않기
+    const subscribeButton = Video.writer._id !==
+      localStorage.getItem("userId") && (
+      <Subscriber
+        userTo={Video.writer._id}
+        userFrom={localStorage.getItem("userId")}
+      />
+    );
     return (
       <Row>
         <Col lg={18} xs={24}>
@@ -48,12 +56,7 @@ function DetailVideoPage(props) {
             ></video>
 
             <List.Item
-              actions={[
-                <Subscriber
-                  userTo={Video.writer._id}
-                  userFrom={localStorage.getItem("userId")}
-                />,
-              ]}
+              actions={[subscribeButton]}
               // actions={[
               //   <LikeDislikes
               //     video
