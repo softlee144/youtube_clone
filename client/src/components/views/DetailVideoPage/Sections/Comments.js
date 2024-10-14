@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import SingleComment from "./SingleComment";
+import { Button, Input } from "antd";
+const { TextArea } = Input;
 
 function Comments(props) {
   // redux useSelector를 이용하여 state.user 정보를 user 변수에 저장
@@ -23,8 +26,8 @@ function Comments(props) {
     axios.post("/api/comment/saveComment", variables).then((response) => {
       if (response.data.success) {
         console.log(response.data.result);
-        //setComment("")
-        //props.refreshFunction(response.data.result)
+        setComment("");
+        props.refreshFunction(response.data.result);
       } else {
         alert("커멘트를 저장하지 못 했습니다.");
       }
@@ -37,10 +40,11 @@ function Comments(props) {
       <p> replies</p>
       <hr />
       {/* Comment Lists  */}
+      <SingleComment />
 
       {/* Root Comment Form */}
       <form style={{ display: "flex" }} onSubmit={onSubmit}>
-        <textArea
+        <TextArea
           style={{ width: "100%", borderRadius: "5px" }}
           onChange={handleChange}
           value={Comment}
