@@ -37,10 +37,20 @@ function Comments(props) {
   return (
     <div>
       <br />
-      <p> replies</p>
+      <p> Replies</p>
       <hr />
       {/* Comment Lists  */}
-      <SingleComment />
+      {props.commentLists &&
+        props.commentLists.map(
+          (comment, index) =>
+            !comment.responseTo && (
+              <SingleComment
+                refreshFunction={props.refreshFunction}
+                comment={comment}
+                postId={props.postId}
+              />
+            )
+        )}
 
       {/* Root Comment Form */}
       <form style={{ display: "flex" }} onSubmit={onSubmit}>

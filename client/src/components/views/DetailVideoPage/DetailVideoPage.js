@@ -8,7 +8,7 @@ import Comments from "./Sections/Comments";
 function DetailVideoPage(props) {
   const videoId = props.match.params.videoId;
   const [Video, setVideo] = useState([]);
-  //const [CommentLists, setCommentLists] = useState([]);
+  const [CommentLists, setCommentLists] = useState([]);
 
   const videoVariable = {
     videoId: videoId,
@@ -20,19 +20,23 @@ function DetailVideoPage(props) {
         console.log(response.data.video);
         setVideo(response.data.video);
       } else {
-        alert("Failed to get video Info");
+        alert("비디오 정보 가져오기에 실패하였습니다.");
       }
     });
 
-    // axios.post("/api/comment/getComments", videoVariable).then((response) => {
-    //   if (response.data.success) {
-    //     console.log("response.data.comments", response.data.comments);
-    //     setCommentLists(response.data.comments);
-    //   } else {
-    //     alert("Failed to get video Info");
-    //   }
-    // });
+    axios.post("/api/comment/getComments", videoVariable).then((response) => {
+      if (response.data.success) {
+        console.log("response.data.comments", response.data.comments);
+        setCommentLists(response.data.comments);
+      } else {
+        alert("코멘트 정보 가져오기에 실패하였습니다.");
+      }
+    });
   }, []);
+
+  const refreshFunction = (newComment) => {
+    setCommentLists(CommentLists.concat(newComment));
+  };
 
   if (Video.writer) {
     // 비디오 업로더와 로그인 한 사람이 같을 경우 구독 버튼 표시하지 않기
@@ -78,7 +82,11 @@ function DetailVideoPage(props) {
               <div></div>
             </List.Item>
 
-            <Comments postId={videoId} />
+            <Comments
+              commentLists={CommentLists}
+              postId={videoId}
+              refreshFunction={refreshFunction}
+            />
           </div>
         </Col>
         <Col lg={6} xs={24}>
