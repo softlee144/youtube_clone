@@ -36,14 +36,22 @@ function ReplyComment(props) {
       </React.Fragment>
     ));
 
+  const onHandleChange = () => {
+    setOpenReplyComments(!OpenReplyComments);
+  };
+
   return (
     <div>
       {ChildCommentNumber > 0 && (
-        <p style={{ fontSize: "14px", margin: 0, color: "gray" }} onClick>
+        <p
+          style={{ fontSize: "14px", margin: 0, color: "gray" }}
+          onClick={onHandleChange}
+        >
           View {ChildCommentNumber} more comment(s)
         </p>
       )}
-      {renderReplyComment(props.parentCommentId)}
+
+      {OpenReplyComments && renderReplyComment(props.parentCommentId)}
     </div>
   );
 }
